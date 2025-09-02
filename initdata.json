@@ -1,0 +1,8 @@
+{
+    "baseTimeStep": 0.000625,
+    "integDiv": 2,
+    "imuDix": 4,
+    "gncDiv": 4,
+    "cmdDiv": 4,
+    "printDiv": 4
+}
