@@ -8,16 +8,21 @@ export init, getAtm
 atm = nothing
 
 function init(fileName::String)
-  #global atm = CSV.read("c:/tries/julia/DayaJL/run_dir/atmos.dat", DataFrame, delim=' ', header=1)
-  global atm = CSV.read(fileName, DataFrame, delim='\t', header=1)
-  #global atm = CSV.read(fileName, DataFrames, delim=' ', headers=1) #, headers=[:H, :T, :dummy1, :rho, :dummy2])
+  global atm = CSV.read(fileName, DataFrame, delim=' ', header=1, ignorerepeated =true)
 end
 
 function getAtm(alt::Float64)
   idx=0;
-  while false
+  while atm.alt[idx+1]<alt
+    idx+=1
+    if idx==nrow(atm)
+      return (false, 0.0, 0.0)
+    end
   end
-  1.0,1.0
+  p = (alt - atm.alt[idx+1])/(atm.alt[idx+1] - atm.alt[idx])
+  T = atm.T[idx+1] + p*(atm.T[idx+1] - atm.T[idx])
+  rho = atm.rho[idx+1] + p*(atm.rho[idx+1] - atm.rho[idx])
+  return (true, T, rho) 
 end
 
 
