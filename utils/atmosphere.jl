@@ -8,7 +8,7 @@ export init, getAtm
 atm = nothing
 
 function init(fileName::String)
-  global atm = CSV.read(fileName, DataFrame, delim=' ', header=1, ignorerepeated =true)
+  global atm = CSV.read(fileName, DataFrame, delim=' ', header=1, ignorerepeated =true, ignoreemptyrows=true)
 end
 
 function getAtm(alt::Float64)
@@ -25,5 +25,4 @@ function getAtm(alt::Float64)
   return (true, T, rho) 
 end
 
-
-end
+end # module Atmosphere
